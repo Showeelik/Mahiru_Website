@@ -31,6 +31,7 @@
         .sidebar a {
             color: white;
             padding: 8px;
+            padding-left: 12px;
             margin-bottom: 5px;
             text-decoration: none;
             display: block;
@@ -106,6 +107,7 @@
         .user-menu .dropdown-toggle {
             color: white;
             border-radius: 10px;
+            padding-left: 7px;
         }
         .user-menu .dropdown-menu {
             width: 150px;
@@ -118,6 +120,29 @@
         }
         .user-menu .dropdown-item:hover {
             background-color: #495057;
+        }
+
+        .inline-element {
+          display: block;
+          float: right;
+        }
+
+        .col {
+            padding: 0 30px;
+            margin-bottom: 50px;
+        }
+
+        .col .card {
+            padding: 0;
+            text-align: left;
+            max-width: 500px;
+            margin: 0 auto; /* Центрируем карточку горизонтально */
+        }
+
+        .col .card-img-top {
+            width: 100%; /* Изображение растягивается по ширине карточки */
+            height: auto; /* Высота будет изменяться пропорционально ширине */
+            display: block; /* Убираем отступы по умолчанию */
         }
 
         /* Медиа-запросы для уменьшения ширины sidebar на меньших экранах */
@@ -135,7 +160,7 @@
             }
         }
 
-    </style>
+    </style> 
 </head>
 <body>
     <div class="d-flex">
@@ -149,7 +174,7 @@
         <hr>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a href="#home" class="nav-text active" id="nav-home">
+                <a href="javascript:void(0);" class="nav-text active" onclick="navigateTo('/home')" id="nav-home">
                   <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-house me-2" viewBox="0 0 16 16">
                     <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
                   </svg>
@@ -157,7 +182,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#categories" class="nav-text" id="nav-categories">
+                <a href="javascript:void(0);" class="nav-text" onclick="navigateTo('/categories')" id="nav-categories">
                   <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart me-2" viewBox="0 0 16 16">
                     <path d="M6 1v3H1V1zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1zm14 12v3h-5v-3zm-5-1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1zM6 8v7H1V8zM1 7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zm14-6v7h-5V1zm-5-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1z"/>
                   </svg>
@@ -165,7 +190,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#orders" class="nav-text" id="nav-orders">
+                <a href="javascript:void(0);" class="nav-text" onclick="navigateTo('/orders')" id="nav-orders">
                   <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart me-2" viewBox="0 0 16 16">
                     <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
                   </svg>
@@ -173,7 +198,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#contacts" class="nav-text" id="nav-contacts">
+                <a href="javascript:void(0);" class="nav-text" onclick="navigateTo('/contacts')" id="nav-contacts">
                   <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart me-2" viewBox="0 0 16 16">
                     <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z"/>
                   </svg>
@@ -201,110 +226,465 @@
           <h1 class="text-center">Главная</h1>
           <p class="text-center">Вы находитесь на сайте, предназначенном для продажи товаров.</p>
           <div class="row justify-content-center">
-              <div class="col-md-3">
-                  <div class="card mb-4 shadow-sm">
-                      <div class="card-body">
-                          <h5 class="card-header">Товар 1</h5>
-                          <h3 class="card-title">$100</h3>
-                          <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
-                          <a href="#" class="btn btn-primary">Купить</a>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-md-3">
-                  <div class="card mb-4 shadow-sm">
-                      <div class="card-body">
-                          <h5 class="card-header">Товар 1</h5>
-                          <h3 class="card-title">$100</h3>
-                          <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
-                          <a href="#" class="btn btn-primary">Купить</a>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-md-3">
-                  <div class="card mb-4 shadow-sm">
-                      <div class="card-body">
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
                         <h5 class="card-header">Товар 1</h5>
-                          <h3 class="card-title">$100</h3>
-                          <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
-                          <a href="#" class="btn btn-primary">Купить</a>
-                      </div>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Купить</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Купить</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                    <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Купить</a>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div id="categories" class="page">
+          <h1 class="text-center">Категории</h1>
+          <div class="row justify-content-center">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+              <div class="col">
+                <div class="card" aria-hidden="true">
+                  <img src="https://via.placeholder.com/500x250" class="card-img-top" alt="Placeholder" width="500" height="250">
+                  <div class="card-body">
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-outline-secondary">View</button>
+                      <button type="button" class="btn btn-outline-secondary">Edit</button>
+                    </div>
+                    <p class="card-text text-end inline-element"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
                   </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                      <h5 class="card-header">Товар 1</h5>
-                        <h3 class="card-title">$100</h3>
-                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
-                        <a href="#" class="btn btn-primary">Купить</a>
-                    </div>
                 </div>
               </div>
-              <div class="col-md-3">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                      <h5 class="card-header">Товар 1</h5>
-                        <h3 class="card-title">$100</h3>
-                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
-                        <a href="#" class="btn btn-primary">Купить</a>
+              <div class="col">
+                <div class="card">
+                  <img src="https://via.placeholder.com/500x250" class="card-img-top" alt="Placeholder" width="500" height="250">
+                  <div class="card-body">
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-outline-secondary">View</button>
+                      <button type="button" class="btn btn-outline-secondary">Edit</button>
                     </div>
+                    <p class="card-text text-end inline-element"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-3">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                      <h5 class="card-header">Товар 1</h5>
-                        <h3 class="card-title">$100</h3>
-                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
-                        <a href="#" class="btn btn-primary">Купить</a>
+              <div class="col">
+                <div class="card">
+                  <img src="https://via.placeholder.com/500x250" class="card-img-top" alt="Placeholder" width="500" height="250">
+                  <div class="card-body">
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-outline-secondary">View</button>
+                      <button type="button" class="btn btn-outline-secondary">Edit</button>
                     </div>
+                    <p class="card-text text-end inline-element"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-3">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                      <h5 class="card-header">Товар 1</h5>
-                        <h3 class="card-title">$100</h3>
-                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
-                        <a href="#" class="btn btn-primary">Купить</a>
+              <div class="col">
+                <div class="card">
+                  <img src="https://via.placeholder.com/500x250" class="card-img-top" alt="Placeholder" width="500" height="250">
+                  <div class="card-body">
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-outline-secondary">View</button>
+                      <button type="button" class="btn btn-outline-secondary">Edit</button>
                     </div>
+                    <p class="card-text text-end inline-element"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                  </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+        <div id="orders" class="page">
+          <h1 class="text-center">Заказы</h1>
+          <div class="row justify-content-center">
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                    <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                    <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                    <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                    <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                    <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                    <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                    <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                    <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                    <h5 class="card-header">Товар 1</h5>
+                        <h1 class="card-title">$100</h1>
+                        <p class="card-text">10 users included, 2 GB of storage, Email support, Help center access</p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div id="contacts" class="page">
+          <h1 class="text-center">Контакты</h1>
+          <div class="row justify-content-center">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+              <div class="col">
+                <div class="card">
+                  <div class="card-body">
+                    <form>
+                      <div class="mb-3">
+                        <label for="exampleInputUsername" class="form-label fw-bold">Имя</label>
+                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                      </div>
+                      <div class="mb-3">
+                        <label for="exampleInputEmail" class="form-label fw-bold">Email</label>
+                        <div class="input-group mb-3">
+                          <span class="input-group-text" id="basic-addon1">@</span>
+                          <input type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label fw-bold">Сообщение</label>
+                        <textarea class="form-control" aria-label="With textarea"></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Отправить</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h3>Наши контакты</h3>
+                <p>Мы заинтересованы в том, чтобы обеспечить лучший сервис и удовлетворение ваших потребностей. Здесь вы найдете все контактные данные для связи с нашей командой, включая телефоны, электронную почту и адрес офиса. Ваше мнение очень важно для нас, и мы готовы выслушать все ваши предложения и замечания.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      function showPageByHash() {
-          var hash = window.location.hash.substring(1); // Получаем хэш без '#'
-          var pages = document.querySelectorAll('.page');
-    
-          pages.forEach(function(page) {
-              if (page.id === hash) {
-                  page.classList.add('active');
-              } else {
-                  page.classList.remove('active');
-              }
-          });
-    
-          // Убираем активный класс у всех ссылок
-          var links = document.querySelectorAll('.nav-text');
-          links.forEach(function(link) {
-              if (link.getAttribute('href') === '#' + hash) {
-                  link.classList.add('active');
-              } else {
-                  link.classList.remove('active');
-              }
-          });
-      }
-    
-      // Обрабатываем событие изменения хэша
-      window.addEventListener('hashchange', showPageByHash);
-    
-      // Обрабатываем первый заход на страницу
-      window.addEventListener('load', showPageByHash);
+        // Обработчик маршрутов
+        const routes = {
+            '/home': 'home', // домашняя страница
+            '/categories': 'categories', // страница категорий
+            '/orders': 'orders', // страница заказов
+            '/contacts': 'contacts', // страница контактов
+        };
+
+
+        function navigateTo(page) {
+            // Изменение URL без перезагрузки страницы
+            history.pushState({}, '', page);
+
+            // Здесь выполняется загрузка контента в зависимости от страницы
+            loadPage(page);
+        }
+
+        function loadPage(page) {
+            console.log(page);
+            const pageId = routes[page] || routes['/' + page] || '404'; // Если маршрут не найден, загружаем 404 страницу
+            var pages = document.querySelectorAll('.page');
+            var links = document.querySelectorAll('.nav-text');
+
+            console.log(pageId);
+
+            pages.forEach(function (p) {
+                // Добавляем активный класс к нужной странице на основе её id
+                if (p.id === pageId) {
+                    p.classList.add('active');
+                } else {
+                    p.classList.remove('active');
+                }
+            });
+
+            // Убираем активный класс у всех ссылок
+            links.forEach(function (link) {
+                if (link.id === "nav-" + pageId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        // Реакция на нажатие кнопок "вперед" и "назад" в браузере
+        window.addEventListener('popstate', function (event) {
+            const path = window.location.pathname || '/';
+            loadPage(path);
+        });
+        // Инициализация начальной страницы при загрузке
+        window.addEventListener('DOMContentLoaded', function() {
+            const path = window.location.pathname || '/';
+            loadPage(path);
+        });
     </script>
     
 </body>
