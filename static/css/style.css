@@ -1,0 +1,153 @@
+body {
+    display: flex;
+    height: 100vh;
+    margin: 0;
+}
+
+.page {
+    display: none;
+}
+.page.active {
+    display: block;
+}
+.sidebar {
+    width: 300px;
+    height: 100vh;
+    background-color: #343a40;
+    color: white;
+    padding: 10px;
+    position: fixed; /* Делаем sidebar фиксированным */
+    transition: width 0.3s ease;
+}
+
+.sidebar a {
+    color: white;
+    padding: 8px;
+    padding-left: 12px;
+    margin-bottom: 5px;
+    text-decoration: none;
+    display: block;
+    border-radius: 10px;
+}
+
+.sidebar svg {
+    margin-right: 10px;
+}
+
+
+.sidebar a:hover {
+    background-color: #495057;
+    border-radius: 10px;
+    color: #4169eb;
+}
+
+.sidebar a::before {
+    color: white;
+}
+
+.sidebar a.active {
+    background-color: #006edb;
+    border-radius: 10px;
+}
+
+.sidebar a.active:hover {
+    color: #ffffff;
+}
+
+.content {
+    margin-left: 300px; /* Отодвигаем основной контент, чтобы он не наезжал на sidebar */
+    padding: 20px;
+    transition: width 0.3s ease;
+}
+
+.card {
+    text-align: center;
+    position: relative;
+    padding-top: 36px;
+}
+
+.card-body .card-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 12px;
+}
+
+.user-menu {
+    background-color: #343a40;
+    width: 300px;
+    padding: 10px;
+    padding-top: 0;
+    transition: width 0.3s ease;
+}
+
+.user-menu hr {
+    margin-bottom: 10px;
+
+}
+
+.user-menu img {
+    object-fit: cover;
+    width: 40px;
+    height: 40px;
+    border: 2px solid white;
+    padding: 2px;
+    border-radius: 50%; /* Сделать картинку круглой */
+    margin-right: 3px; /* Отступ справа от аватара */
+}
+.user-menu .dropdown-toggle {
+    color: white;
+    border-radius: 10px;
+    padding-left: 7px;
+}
+.user-menu .dropdown-menu {
+    width: 150px;
+    background-color: #242629;
+    border: none;
+}
+.user-menu .dropdown-item {
+    color: white;
+    padding: 10px 20px;
+}
+.user-menu .dropdown-item:hover {
+    background-color: #495057;
+}
+
+.inline-element {
+  display: block;
+  float: right;
+}
+
+.col {
+    padding: 0 30px;
+    margin-bottom: 50px;
+}
+
+.col .card {
+    padding: 0;
+    text-align: left;
+    max-width: 500px;
+    margin: 0 auto; /* Центрируем карточку горизонтально */
+}
+
+.col .card-img-top {
+    width: 100%; /* Изображение растягивается по ширине карточки */
+    height: auto; /* Высота будет изменяться пропорционально ширине */
+    display: block; /* Убираем отступы по умолчанию */
+}
+
+/* Медиа-запросы для уменьшения ширины sidebar на меньших экранах */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px; /* Уменьшаем ширину */
+    }
+
+    .user-menu {
+        width: 200px;
+    }
+
+    .content {
+        margin-left: 200px; /* Соответственно сдвигаем контент */
+    }
+}
