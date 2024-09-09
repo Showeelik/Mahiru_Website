@@ -1,5 +1,6 @@
 from http.server import SimpleHTTPRequestHandler, HTTPServer
 import os
+from urllib.parse import parse_qs
 
 class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
@@ -33,6 +34,23 @@ class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):
                     self.wfile.write(contacts_content.encode('utf-8'))
             else:
                 self.send_error(404, "Contacts page not found")
+
+    def do_POST(self):
+        content_length = int(self.headers['Content-Length'])
+        # Читаем данные POST-запроса
+        post_data = self.rfile.read(content_length)
+        
+        # Парсим данные из POST-запроса
+        parsed_data = parse_qs(post_data.decode('utf-8'))
+
+        # Печатаем данные в консоль
+        print("Received POST data:")
+        for key, value in parsed_data.items():
+            print(f"{key}: {value}")
+
+        # После обработки POST-запроса можно вернуть страницу
+        self.path = '/contacts.html'
+        self.do_GET()
 
 def run(server_class=HTTPServer, handler_class=CustomHTTPRequestHandler, port=8080):
     server_address = ('', port)

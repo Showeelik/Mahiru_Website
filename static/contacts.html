@@ -73,24 +73,24 @@
               <div class="col">
                 <div class="card">
                   <div class="card-body">
-                    <form>
+                    <form action="/" method="post">
                       <div class="mb-3">
                         <label for="exampleInputUsername" class="form-label fw-bold">Имя</label>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" name="username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                       </div>
                       <div class="mb-3">
                         <label for="exampleInputEmail" class="form-label fw-bold">Email</label>
                         <div class="input-group mb-3">
                           <span class="input-group-text" id="basic-addon1">@</span>
-                          <input type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+                          <input type="email" class="form-control" name="email" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
                         </div>
                       </div>
                       <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label fw-bold">Сообщение</label>
-                        <textarea class="form-control" aria-label="With textarea"></textarea>
+                        <textarea class="form-control" name="message" aria-label="With textarea"></textarea>
                       </div>
                       <button type="submit" class="btn btn-primary">Отправить</button>
-                    </form>
+                    </form>                    
                   </div>
                 </div>
               </div>
