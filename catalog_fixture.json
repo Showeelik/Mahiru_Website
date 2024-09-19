@@ -1,0 +1,78 @@
+[
+{
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+        "name": "Laptop",
+        "description": "Мощный ноутбук с 16GB RAM и SSD на 512GB.",
+        "image": "",
+        "category": 3,
+        "price": "999.99",
+        "created_at": "2024-09-19T13:24:38.914Z",
+        "updated_at": "2024-09-19T13:24:38.914Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 8,
+    "fields": {
+        "name": "Smartphone",
+        "description": "Современный смартфон с двойной камерой и 5G поддержкой.",
+        "image": "",
+        "category": 3,
+        "price": "499.99",
+        "created_at": "2024-09-19T13:24:38.919Z",
+        "updated_at": "2024-09-19T13:24:38.919Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 9,
+    "fields": {
+        "name": "Fiction Book",
+        "description": "Художественная книга о приключениях в параллельных мирах.",
+        "image": "",
+        "category": 4,
+        "price": "19.99",
+        "created_at": "2024-09-19T13:24:38.924Z",
+        "updated_at": "2024-09-19T13:24:38.924Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 10,
+    "fields": {
+        "name": "Jacket",
+        "description": "Удобная куртка для холодной погоды с водоотталкивающей тканью.",
+        "image": "",
+        "category": 5,
+        "price": "59.99",
+        "created_at": "2024-09-19T13:24:38.930Z",
+        "updated_at": "2024-09-19T13:24:38.930Z"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+        "name": "Electronics",
+        "description": "Категория для всех электронных устройств, таких как компьютеры, смартфоны и т.д."
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+        "name": "Books",
+        "description": "Категория для всех видов книг, включая художественную литературу и учебники."
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 5,
+    "fields": {
+        "name": "Clothing",
+        "description": "Категория для всей одежды и аксессуаров."
+    }
+}
+]
