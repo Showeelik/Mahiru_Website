@@ -9,6 +9,11 @@ from .models import Category, Product
 
 
 # Create your views here.
+def product_detal(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    return render(request, "catalog/product_detal.html", {"product": product})
+
+
 def add_product(request):
     if request.method == "POST":
         name = request.POST.get("name")

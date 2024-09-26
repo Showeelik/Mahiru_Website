@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}MahiruStore - {{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">{{ product.name }}</h1>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid mb-3 rounded-3">
+        {% else %}
+            <img src="https://imgholder.ru/600x300/8493a8/adb9ca&text=IMAGE+HOLDER&font=kelson" alt="{{ product.name }}" class="img-fluid mb-3 rounded-3">
+        {% endif %}
+    </div>
+    <div class="col-md-6 d-flex flex-column">
+        <div class="d-flex align-items-center">
+            <h5 class="me-2">Категория:</h5>
+            <h5 class="text-muted"><a href="{% url 'catalog' %}?category={{ product.category.id }}" class="text-muted">{{ product.category }}</a></h5>
+        </div>
+        <hr class="my-0">
+        <h2>Описание:</h2>
+        <p class="text-justify text-muted">{{ product.description }}</p>
+        <div class="mt-auto">
+            <h1 class="card-title pricing-card-title mb-2">${{ product.price }}</h1>
+            <a class="btn btn-primary btn-lg btn-block mb-3 w-100" role="button">Добавить в корзину</a>
+        </div>
+    </div>
+</div>
+{% include 'includes\footer.html' %}
+{% endblock %}
