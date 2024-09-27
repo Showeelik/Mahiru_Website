@@ -1,7 +1,7 @@
 
 [tool.poetry]
 name = "mahiru_website"
-version = "3.1.0"
+version = "3.1.1"
 description = ""
 authors = ["Showeelik <email>"]
 readme = "README.md"
@@ -51,8 +51,8 @@ exclude = '''
     | \.venv
     | dist
   )/
-  | foo.py           # Также отдельно исключить файл с именем foo.py
-                     # в корне проекта
+  | foo.py            # Также отдельно исключить файл с именем foo.py
+                      # в корне проекта
 )
 '''
 
