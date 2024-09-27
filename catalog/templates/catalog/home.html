@@ -13,7 +13,7 @@
         <p class="text-center">Эти продукты вы можете купить в нашем магазине</p>
         <div class="row justify-content-start">
             {% for product in page_obj %}
-                {% include 'includes\product_card.html' with product=product %}
+                {% include 'includes/product_card.html' with product=product %}
             {% endfor %}
         </div>
         <nav aria-label="Page navigation">
@@ -47,5 +47,5 @@
         </nav>
     </div>
 </div>
-{% include 'includes\footer.html' %}
+{% include 'includes/footer.html' %}
 {% endblock %}

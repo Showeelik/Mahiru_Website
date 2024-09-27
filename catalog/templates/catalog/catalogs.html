@@ -29,7 +29,7 @@
         <p>{{ selected_category.description }}</p>
         <div class="row justify-content-start">
             {% for product in selected_category.products.all %}
-                {% include 'includes\product_card.html' with product=product %}
+                {% include 'includes/product_card.html' with product=product %}
             {% empty %}
                 <p>Нет доступных продуктов в этой категории.</p>
             {% endfor %}
@@ -40,7 +40,7 @@
             <p>{{ category.description }}</p>
             <div class="row justify-content-start">
                 {% for product in category.products.all %}
-                    {% include 'includes\product_card.html' with product=product %}
+                    {% include 'includes/product_card.html' with product=product %}
                 {% empty %}
                     <p>Нет доступных продуктов в этой категории.</p>
                 {% endfor %}
@@ -48,5 +48,5 @@
         {% endfor %}
     {% endif %}
 </div>
-{% include 'includes\footer.html' %}
+{% include 'includes/footer.html' %}
 {% endblock %}
