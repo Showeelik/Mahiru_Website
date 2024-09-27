@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}MahiruStore - Главная{% endblock %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">MahiruStore</h1>
+    <p class="lead">MahiruStore - это отличный вариант хранения ваших плагинов и примеров кода, который вы бы хотели продать</p>
+</div>
+<div class="container">
+    <div class="recommendations my-5">
+        <h2 class="text-center">Рекомендации</h2>
+        <p class="text-center">Эти продукты вы можете купить в нашем магазине</p>
+        <div class="row justify-content-start">
+            {% for product in page_obj %}
+                {% include 'includes/product_card.html' with product=product %}
+            {% endfor %}
+        </div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1" aria-label="Первая">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Назад</a>
+                    </li>
+                {% endif %}
+
+                <li class="page-item disabled">
+                    <span class="page-link">Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+                </li>
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Вперед</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Последняя">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+{% include 'includes/footer.html' %}
+{% endblock %}

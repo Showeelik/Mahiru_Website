@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}MahiruStore - Каталог{% endblock %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Добавить продукт</h1>
+</div>
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">Название</label>
+            <input type="text" name="name" id="name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Описание</label>
+            <textarea name="description" id="description" class="form-control" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Цена</label>
+            <input type="number" name="price" id="price" class="form-control" step="0.01" required>
+        </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">Категория</label>
+            <select name="category" id="category" class="form-control" required>
+                <option value="">Выберите категорию</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Изображение</label>
+            <input type="file" name="image" id="image" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Добавить</button>
+        <a href="{% url 'catalog' %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% include 'includes/footer.html' %}
+{% endblock %}
