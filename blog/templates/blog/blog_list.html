@@ -1,19 +1,21 @@
-{% extends 'base.html' %}
+{% extends 'base_blog.html' %}
 
-{% block title %}MahiruStore - Главная{% endblock %}
+{% block title %}MahiruBlog - Главная{% endblock %}
 
 {% block content %}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">MahiruStore</h1>
-    <p class="lead">MahiruStore - это отличный вариант хранения ваших плагинов и примеров кода, который вы бы хотели продать</p>
+    <h1 class="display-4">MahiruBlog</h1>
+    <p class="lead">MahiruBlog - Место для вашего блога</p>
 </div>
 <div class="container">
+    <div class="text-center">
+        <a href="{% url 'blog-create' %}" class="btn btn-primary btn-lg mb-3 w-50">Добавить Блог</a>
+    </div>
     <div class="recommendations my-5">
         <h2 class="text-center">Рекомендации</h2>
-        <p class="text-center">Эти продукты вы можете купить в нашем магазине</p>
         <div class="row justify-content-start">
-            {% for product in page_obj %}
-                {% include 'includes/product_card.html' with product=product %}
+            {% for blog in page_obj %}
+                {% include 'includes/blog_card.html' with blog=blog %}
             {% endfor %}
         </div>
         <nav aria-label="Page navigation">
@@ -47,5 +49,5 @@
         </nav>
     </div>
 </div>
-{% include 'includes/footer.html' %}
+{% include 'includes/footer_blog.html' %}
 {% endblock %}

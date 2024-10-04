@@ -1,7 +1,7 @@
 
 [tool.poetry]
 name = "mahiru_website"
-version = "3.1.2"
+version = "4.0.0"
 description = ""
 authors = ["Showeelik <email>"]
 readme = "README.md"
