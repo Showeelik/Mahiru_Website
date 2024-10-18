@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}MahiruStore - Каталог{% endblock %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Каталог</h1>
+</div>
+
+<div class="container">
+    <form method="GET" action="">
+        <div class="form-group mb-3">
+            <label for="category-select">Выберите категорию</label>
+            <select class="form-control" id="category-select" name="category">
+                <option value="">Все категории</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Применить</button>
+        <a href="{% url 'catalog_add' %}" class="btn btn-secondary">Добавить свой продукт</a>
+    </form>
+
+    {% if selected_category %}
+        <h2 class="my-4">{{ selected_category.name }}</h2>
+        <p>{{ selected_category.description }}</p>
+        <div class="row justify-content-start">
+            {% for product in selected_category_products %}
+                {% include 'includes/product_card.html' with product=product %}
+            {% empty %}
+                <p class="text-muted">Нет доступных продуктов в этой категории.</p>
+            {% endfor %}
+        </div>
+    {% else %}
+        {% for category in categories %}
+            <hr class="my-4">
+            <h2 class="mt-4">{{ category.name }}</h2>
+            <p>{{ category.description }}</p>
+        
+            {% if category.published_products %}
+                <div class="row justify-content-start">
+                    {% for product in category.published_products %}
+                        {% include 'includes/product_card.html' with product=product %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-muted">Нет доступных продуктов в этой категории.</p>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+{% include 'includes/toast.html'%}
+{% include 'includes/footer.html' %}
+{% endblock %}
