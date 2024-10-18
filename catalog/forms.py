@@ -49,6 +49,28 @@ class ProductForm(forms.ModelForm):
                 raise forms.ValidationError(f"Недопустимое слово: {word}")
 
         return name
+    
+    def clean_description(self):
+        """
+        Валидация описания продукта
+
+
+        Raises:
+            forms.ValidationError: Недопустимое слово
+            
+        Returns:
+            str:
+        """
+        with open("black_list_words.json", "r", encoding="utf-8") as f:
+            words = json.load(f)
+
+        description = self.cleaned_data["description"]
+
+        for word in words:
+            if word in description.lower().split():
+                raise forms.ValidationError(f"Недопустимое слово: {word}")
+
+        return description
 
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
