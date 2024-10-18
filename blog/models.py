@@ -8,7 +8,7 @@ class BlogPost(models.Model):
     preview_image = models.ImageField(upload_to="previews/")
     created_at = models.DateTimeField(auto_now_add=True)
     is_published = models.BooleanField(default=False)
-    view_count = models.IntegerField(default=0)
+    view_count = models.IntegerField(default=0, editable=False)
 
     def __str__(self) -> str:
         return self.title

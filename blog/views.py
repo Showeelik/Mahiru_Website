@@ -96,10 +96,8 @@ class BlogPublishView(View):
 
 class BlogDeleteView(DeleteView):
     model = Blog
+    success_url = reverse_lazy('blogs')  # После успешного удаления
 
-    def get(self, request, *args, **kwargs) -> Any:
-        messages.success(request, "Блог был успшено удален.")
-        return self.post(request, *args, **kwargs)
-
-    def get_success_url(self) -> str:
-        return reverse_lazy("blogs")
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, 'Блог успешно удалён.')  # Добавляем сообщение
+        return super().delete(request, *args, **kwargs)

@@ -28,25 +28,30 @@
         <h2 class="my-4">{{ selected_category.name }}</h2>
         <p>{{ selected_category.description }}</p>
         <div class="row justify-content-start">
-            {% for product in selected_category.products.all %}
+            {% for product in selected_category_products %}
                 {% include 'includes/product_card.html' with product=product %}
             {% empty %}
-                <p>Нет доступных продуктов в этой категории.</p>
+                <p class="text-muted">Нет доступных продуктов в этой категории.</p>
             {% endfor %}
         </div>
     {% else %}
         {% for category in categories %}
-            <h2 class="my-4">{{ category.name }}</h2>
+            <hr class="my-4">
+            <h2 class="mt-4">{{ category.name }}</h2>
             <p>{{ category.description }}</p>
-            <div class="row justify-content-start">
-                {% for product in category.products.all %}
-                    {% include 'includes/product_card.html' with product=product %}
-                {% empty %}
-                    <p>Нет доступных продуктов в этой категории.</p>
-                {% endfor %}
-            </div>
+        
+            {% if category.published_products %}
+                <div class="row justify-content-start">
+                    {% for product in category.published_products %}
+                        {% include 'includes/product_card.html' with product=product %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-muted">Нет доступных продуктов в этой категории.</p>
+            {% endif %}
         {% endfor %}
     {% endif %}
 </div>
+{% include 'includes/toast.html'%}
 {% include 'includes/footer.html' %}
 {% endblock %}

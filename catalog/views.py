@@ -3,9 +3,13 @@ import random
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from django.views.generic import CreateView, DetailView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DetailView, ListView, DeleteView, UpdateView
+
+
 
 from .models import Category, Product
+from .forms import ProductForm
 
 
 # Create your views here.
@@ -19,7 +23,7 @@ class HomeView(ListView):
     model = Product
     template_name = "catalog/home.html"
     context_object_name = "products"
-    paginate_by = 4  # Показывать 8 продуктов на странице
+    paginate_by = 4  # Показывать 4 продуктов на странице
 
     def get(self, request, *args, **kwargs) -> HttpResponse:
         # Получаем или генерируем seed в сессии
@@ -31,22 +35,24 @@ class HomeView(ListView):
     def get_queryset(self) -> list[Product]:
         # Используем seed для случайной сортировки продуктов
         random_seed = self.request.session["random_seed"]
-        products = list(Product.objects.all())
+        
+        products = list(Product.objects.filter(is_published=True))
         random.Random(random_seed).shuffle(products)
         return products
+        
 
 
 class ProductCreateView(CreateView):
     model = Product
-    template_name = "catalog/product_add.html"
-    fields = ["name", "description", "price", "category", "image"]
+    form_class = ProductForm
+    template_name = "catalog/product_form.html"
     success_url = "/catalogs"
 
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.all()
         return context
-
+    
     def form_valid(self, form) -> HttpResponse:
         messages.success(self.request, "Продукт успешно добавлен!")
         return super().form_valid(form)
@@ -57,20 +63,53 @@ class CatalogView(ListView):
     template_name = "catalog/catalogs.html"
     context_object_name = "categories"
 
-    def get_context_data(self, **kwargs) -> dict:
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # Получаем выбранную категорию через GET параметр
         category_id = self.request.GET.get("category")
         selected_category = None
 
         if category_id:
             selected_category = get_object_or_404(Category, id=category_id)
+            selected_category_products = selected_category.products.filter(is_published=True)
+            context["selected_category_products"] = selected_category_products
+            context["selected_category"] = selected_category
+        else:
+            categories = Category.objects.all()
+            for category in categories:
+                category.published_products = category.products.filter(is_published=True)
+            context["categories"] = categories
 
-        context["selected_category"] = selected_category
         return context
-
 
 class ContactsView(ListView):
     model = Category
     template_name = "catalog/contacts.html"
+    
+class ProductDeleteView(DeleteView):
+    model = Product
+    context_object_name = "product"
+    success_url = reverse_lazy("catalogs")
+
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, "Продукт успешно удалён!")
+        return super().delete(request, *args, **kwargs)
+    
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    template_name = "catalog/product_form.html"
+
+    def get_success_url(self) -> str:
+        return reverse_lazy("product", kwargs={"pk": self.object.pk})
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        return context
+
+    def form_valid(self, form) -> HttpResponse:
+        messages.success(self.request, "Продукт успeшно обновлён!")
+        return super().form_valid(form)
+    
