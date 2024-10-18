@@ -1,0 +1,46 @@
+{% extends 'base_blog.html' %}
+
+{% block title %}MahiruBlog - Добавить продукт{% endblock %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    {% if blog.is_published %}
+        <h1 class="display-4">Редактировать Блог</h1>
+    {% else %}
+        <h1 class="display-4">Добавить Блог</h1>
+    {% endif %}
+</div>
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="title" class="form-label">Название</label>
+            <input type="text" name="title" id="title" class="form-control" value="{{ form.title.value|default_if_none:'' }}" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="content" class="form-label">Описание</label>
+            <textarea name="content" id="content" class="form-control" required>{{ form.content.value|default_if_none:'' }}</textarea>
+        </div>
+        
+        <div class="mb-3">
+            <label for="preview_image" class="form-label">Изображение</label>
+            <input type="file" name="preview_image" id="preview_image" class="form-control">
+        </div>
+        
+        <div class="mb-3 w-40">
+            {% if blog.is_published %}
+                <button type="submit" name="action" value="publish" class="btn btn-success">Сохранить</button>
+                <button type="submit" name="action" value="draft" class="btn btn-primary">Снять с публикации</button>
+            {% else %}
+                <button type="submit" name="action" value="publish" class="btn btn-success">Опубликовать</button>
+                <button type="submit" name="action" value="draft" class="btn btn-primary">Сохранить</button>
+            {% endif %}
+                
+            <a href="{% url 'blogs' %}" class="btn btn-danger">Отмена</a>
+        </div>
+    </form>
+</div>
+{% include 'includes/footer_blog.html' %}
+{% endblock %}
