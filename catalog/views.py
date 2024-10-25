@@ -1,6 +1,7 @@
 import random
 
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
@@ -11,7 +12,7 @@ from .models import Category, Product
 
 
 # Create your views here.
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = "catalog/product_detail.html"
     context_object_name = "product"
@@ -54,7 +55,7 @@ class HomeView(ListView):
         return products
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     template_name = "catalog/product_form.html"
@@ -125,7 +126,7 @@ class ContactsView(ListView):
     template_name = "catalog/contacts.html"
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     context_object_name = "product"
     success_url = reverse_lazy("catalogs")
@@ -147,7 +148,7 @@ class ProductDeleteView(DeleteView):
         return super().delete(request, *args, **kwargs)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = "catalog/product_form.html"

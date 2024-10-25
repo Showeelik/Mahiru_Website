@@ -13,7 +13,9 @@
                 <p>{{ blog.content|truncatechars:100 }}</p>
             </div>
             <small class="text-muted mt-auto mb-2">Просмотрено: {{ blog.view_count }}</small>
-            <a href="{% url 'blog' blog.id %}" class="btn btn-lg btn-block btn-outline-primary mt-0" role="button">Подробнее</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'blog' blog.id %}" class="btn btn-lg btn-block btn-outline-primary mt-0" role="button">Подробнее</a>
+            {% endif %}
         </div>
     </div>
 </div>

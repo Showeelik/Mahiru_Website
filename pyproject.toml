@@ -1,7 +1,7 @@
 
 [tool.poetry]
 name = "mahiru_website"
-version = "5.0.2"
+version = "6.0.0"
 description = ""
 authors = ["Showeelik <email>"]
 readme = "README.md"
@@ -11,7 +11,7 @@ python = "^3.12"
 requests = "^2.32.3"
 django = "^5.1.1"
 python-dotenv = "^1.0.1"
-pillow = "^10.4.0"
+pillow = "^11.0.0"
 ipython = "^8.27.0"
 psycopg2-binary = "^2.9.9"
 

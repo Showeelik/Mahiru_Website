@@ -1,6 +1,7 @@
 from typing import Any
 
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -21,7 +22,7 @@ class BlogListView(ListView):
         return Blog.objects.filter(is_published=True)
 
 
-class BlogDetailView(DetailView):
+class BlogDetailView(LoginRequiredMixin, DetailView):
     model = Blog
     template_name = "blog/blog_detail.html"
     context_object_name = "blog"
@@ -34,7 +35,7 @@ class BlogDetailView(DetailView):
         return context
 
 
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, CreateView):
     model = Blog
     fields = ["title", "content", "preview_image"]
     template_name = "blog/blog_form.html"
@@ -53,7 +54,7 @@ class BlogCreateView(CreateView):
         return super().form_valid(form)
 
 
-class BlogUpdateView(UpdateView):
+class BlogUpdateView(LoginRequiredMixin, UpdateView):
     model = Blog
     fields = ["title", "content", "preview_image", "is_published"]
     template_name = "blog/blog_form.html"
@@ -77,7 +78,7 @@ class BlogUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class BlogPublishView(View):
+class BlogPublishView(LoginRequiredMixin, View):
     def post(self, request, pk) -> Any:
         # Получаем блог по его ID
         blog = get_object_or_404(Blog, pk=pk)
@@ -94,7 +95,7 @@ class BlogPublishView(View):
         return redirect("blog", pk=pk)
 
 
-class BlogDeleteView(DeleteView):
+class BlogDeleteView(LoginRequiredMixin, DeleteView):
     model = Blog
     success_url = reverse_lazy("blogs")  # После успешного удаления
 
