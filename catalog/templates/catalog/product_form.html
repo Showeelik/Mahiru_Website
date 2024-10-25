@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if object.pk %}MahiruStore - Редактировать продукт
+    {% else %}MahiruStore - Добавить продукт
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">
+        {% if object.pk %}Редактировать продукт{% else %}Добавить продукт{% endif %}
+    </h1>
+</div>
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">
+            {% if object.pk %}
+            Сохранить
+            {% else %}
+            Добавить
+            {% endif %}
+        </button>
+        <a href="{% if object.pk %}{% url 'product' object.id %}{% else %}{% url 'catalogs' %}{% endif %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% include 'includes/footer.html' %}
+{% endblock %}
