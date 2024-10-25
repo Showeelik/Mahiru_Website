@@ -19,7 +19,7 @@ class ProductForm(forms.ModelForm):
     def clean_price(self) -> float:
         """
         Валидация цены
-        
+
         Returns:
             float:
         """
@@ -35,7 +35,7 @@ class ProductForm(forms.ModelForm):
 
         Raises:
             forms.ValidationError: Недопустимое слово
-            
+
         Returns:
             str:
         """
@@ -49,7 +49,7 @@ class ProductForm(forms.ModelForm):
                 raise forms.ValidationError(f"Недопустимое слово: {word}")
 
         return name
-    
+
     def clean_description(self):
         """
         Валидация описания продукта
@@ -57,7 +57,7 @@ class ProductForm(forms.ModelForm):
 
         Raises:
             forms.ValidationError: Недопустимое слово
-            
+
         Returns:
             str:
         """
