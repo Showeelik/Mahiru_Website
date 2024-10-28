@@ -37,8 +37,11 @@
                 <button type="submit" name="action" value="publish" class="btn btn-success">Опубликовать</button>
                 <button type="submit" name="action" value="draft" class="btn btn-primary">Сохранить</button>
             {% endif %}
-                
-            <a href="{% url 'blogs' %}" class="btn btn-danger">Отмена</a>
+            {% if object.pk %}
+                <a href="{% url 'blog' blog.id %}" class="btn btn-danger">Отмена</a>
+            {% else %}
+                <a href="{% url 'blogs' %}" class="btn btn-danger">Отмена</a>
+            {% endif %}
         </div>
     </form>
 </div>

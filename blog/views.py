@@ -1,7 +1,7 @@
 from typing import Any
 
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -27,7 +27,7 @@ class BlogDetailView(LoginRequiredMixin, DetailView):
     template_name = "blog/blog_detail.html"
     context_object_name = "blog"
 
-    def get_context_data(self, **kwargs) -> Any:
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.object.is_published:
             self.object.view_count += 1
@@ -50,14 +50,22 @@ class BlogCreateView(LoginRequiredMixin, CreateView):
             form.instance.is_published = True  # Если выбрана публикация
         else:
             form.instance.is_published = False  # Если сохранение как черновик
+            
+        form.instance.owner = self.request.user
+        
 
         return super().form_valid(form)
 
 
-class BlogUpdateView(LoginRequiredMixin, UpdateView):
+class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Blog
     fields = ["title", "content", "preview_image", "is_published"]
     template_name = "blog/blog_form.html"
+    permission_required = "blog.change_blog"
+    
+    def has_permission(self) -> bool:
+        blog = self.get_object()
+        return super().has_permission() or blog.owner == self.request.user
 
     def get_success_url(self) -> str:
         return reverse_lazy("blog", kwargs={"pk": self.object.pk})
@@ -79,25 +87,52 @@ class BlogUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class BlogPublishView(LoginRequiredMixin, View):
+    
     def post(self, request, pk) -> Any:
         # Получаем блог по его ID
         blog = get_object_or_404(Blog, pk=pk)
 
         # Проверяем, опубликован ли блог
         if not blog.is_published:
-            blog.is_published = True  # Устанавливаем статус "опубликован"
-            blog.save()  # Сохраняем изменения
+            blog.publish()
             messages.success(request, "Опубликовано")
         else:
             messages.warning(request, "Блог уже был опубликован.")
 
         # Перенаправляем на страницу блога после публикации
         return redirect("blog", pk=pk)
+    
+class BlogUnpublishView(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = "blog.can_unpublish_blog"
+    
+    def has_permission(self) -> bool:
+        blog = get_object_or_404(Blog, pk=self.kwargs['pk'])
+        return super().has_permission() or self.request.user == blog.owner
+
+    def post(self, request, pk) -> Any:
+        # Получаем блог по его ID
+        blog = get_object_or_404(Blog, pk=pk)
+
+        # Проверяем, опубликован ли блог
+        if blog.is_published:
+            blog.unpublish()
+            messages.success(request, "Блог успешно снят с публикации.")
+        else:
+            messages.warning(request, "Блог уже снят с публикации.")
+
+        # Перенаправляем на страницу блога после снятия с публикации
+        return redirect("blog", pk=pk)
 
 
-class BlogDeleteView(LoginRequiredMixin, DeleteView):
+
+class BlogDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Blog
     success_url = reverse_lazy("blogs")  # После успешного удаления
+    permission_required = "blog.delete_blog"
+    
+    def has_permission(self) -> bool:
+        blog = self.get_object()
+        return super().has_permission() or blog.owner == self.request.user
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, "Блог успешно удалён.")  # Добавляем сообщение

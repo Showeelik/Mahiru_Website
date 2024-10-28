@@ -15,6 +15,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    owner = models.ForeignKey("accounts.User", on_delete=models.CASCADE, verbose_name="Владелец")
     name = models.CharField(max_length=100, verbose_name="Название")
     description = models.TextField(verbose_name="Описание")
     image = models.ImageField(upload_to="catalog/images", blank=True, verbose_name="Изображение")
@@ -27,6 +28,12 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
+        ordering = ["-created_at"]
+        permissions = [
+            ("can_unpublish_product", "Can unpublish product"),
+            ("can_delete_product", "Can delete product")
+        ]
+
 
     def __str__(self) -> str:
         return self.name

@@ -18,6 +18,26 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="unpublishBlog" tabindex="-1" aria-labelledby="unpublishBlogLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="unpublishBlogLabel">Снять с публикации</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Вы действительно хотите снять опубликованный пост?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <form action="{% url 'blog-unpublish' blog.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Снять</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="deleteBlog" tabindex="-1" aria-labelledby="deleteBlogLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

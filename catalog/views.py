@@ -1,10 +1,11 @@
 import random
 
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 from .forms import ProductForm
@@ -81,6 +82,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         Returns:
             HttpResponse:
         """
+        form.instance.owner = self.request.user
         messages.success(self.request, "Продукт успешно добавлен!")
         return super().form_valid(form)
 
@@ -126,10 +128,15 @@ class ContactsView(ListView):
     template_name = "catalog/contacts.html"
 
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Product
     context_object_name = "product"
     success_url = reverse_lazy("catalogs")
+    permission_required = "catalog.can_delete_product"
+    
+    def has_permission(self) -> bool:
+        product = get_object_or_404(Product, pk=self.kwargs['pk'])
+        return super().has_permission() or self.request.user == product.owner
 
     def delete(self, request, *args, **kwargs) -> HttpResponse:
         """
@@ -147,6 +154,23 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
         messages.success(self.request, "Продукт успешно удалён!")
         return super().delete(request, *args, **kwargs)
 
+class ProductUnpublishView(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = "catalog.can_unpublish_product"
+    
+    def has_permission(self) -> bool:
+        product = get_object_or_404(Product, pk=self.kwargs['pk'])
+        return super().has_permission() or self.request.user == product.owner
+    
+    def post(self, request, pk) -> HttpResponse:
+        product = get_object_or_404(Product, pk=pk)
+        if product.is_published:
+            product.is_published = False
+            product.save()
+            messages.success(request, "Продукт снят с публикации.")
+        else:
+            messages.warning(request, "Продукт уже снят с публикации.")
+        return redirect("product", pk=pk)
+    
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
