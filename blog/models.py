@@ -22,7 +22,7 @@ class BlogPost(models.Model):
             ("can_unpublish_blog", "Can unpublish blog"),
             ("delete_blog", "Can delete blog"),
         ]
-    
+
     def unpublish(self):
         self.is_published = False
         self.save()
@@ -30,4 +30,3 @@ class BlogPost(models.Model):
     def publish(self):
         self.is_published = True
         self.save()
-

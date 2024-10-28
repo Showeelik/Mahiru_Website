@@ -50,9 +50,8 @@ class BlogCreateView(LoginRequiredMixin, CreateView):
             form.instance.is_published = True  # Если выбрана публикация
         else:
             form.instance.is_published = False  # Если сохранение как черновик
-            
+
         form.instance.owner = self.request.user
-        
 
         return super().form_valid(form)
 
@@ -62,7 +61,7 @@ class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     fields = ["title", "content", "preview_image", "is_published"]
     template_name = "blog/blog_form.html"
     permission_required = "blog.change_blog"
-    
+
     def has_permission(self) -> bool:
         blog = self.get_object()
         return super().has_permission() or blog.owner == self.request.user
@@ -87,7 +86,7 @@ class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
 
 class BlogPublishView(LoginRequiredMixin, View):
-    
+
     def post(self, request, pk) -> Any:
         # Получаем блог по его ID
         blog = get_object_or_404(Blog, pk=pk)
@@ -101,12 +100,13 @@ class BlogPublishView(LoginRequiredMixin, View):
 
         # Перенаправляем на страницу блога после публикации
         return redirect("blog", pk=pk)
-    
+
+
 class BlogUnpublishView(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = "blog.can_unpublish_blog"
-    
+
     def has_permission(self) -> bool:
-        blog = get_object_or_404(Blog, pk=self.kwargs['pk'])
+        blog = get_object_or_404(Blog, pk=self.kwargs["pk"])
         return super().has_permission() or self.request.user == blog.owner
 
     def post(self, request, pk) -> Any:
@@ -124,12 +124,11 @@ class BlogUnpublishView(LoginRequiredMixin, PermissionRequiredMixin, View):
         return redirect("blog", pk=pk)
 
 
-
 class BlogDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Blog
     success_url = reverse_lazy("blogs")  # После успешного удаления
     permission_required = "blog.delete_blog"
-    
+
     def has_permission(self) -> bool:
         blog = self.get_object()
         return super().has_permission() or blog.owner == self.request.user

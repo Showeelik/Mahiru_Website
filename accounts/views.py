@@ -1,15 +1,15 @@
 from django.conf import settings
-from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
+from django.contrib.auth.views import LoginView, LogoutView
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 
+from blog.models import BlogPost as Blog
+from catalog.models import Product
+
 from .forms import LoginForm, ProfileForm, RegisterForm
 from .models import User
-
-from catalog.models import Product
-from blog.models import BlogPost as Blog
 
 
 class RegisterView(CreateView):
@@ -39,7 +39,7 @@ class ProfileView(DetailView):
         return self.request.user
 
     def get_context_data(self, **kwargs):
-        
+
         context = super().get_context_data(**kwargs)
         context["products"] = Product.objects.filter(owner=self.request.user)
         context["blogs"] = Blog.objects.filter(owner=self.request.user)

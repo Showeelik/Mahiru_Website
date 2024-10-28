@@ -133,9 +133,9 @@ class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
     context_object_name = "product"
     success_url = reverse_lazy("catalogs")
     permission_required = "catalog.can_delete_product"
-    
+
     def has_permission(self) -> bool:
-        product = get_object_or_404(Product, pk=self.kwargs['pk'])
+        product = get_object_or_404(Product, pk=self.kwargs["pk"])
         return super().has_permission() or self.request.user == product.owner
 
     def delete(self, request, *args, **kwargs) -> HttpResponse:
@@ -154,13 +154,14 @@ class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
         messages.success(self.request, "Продукт успешно удалён!")
         return super().delete(request, *args, **kwargs)
 
+
 class ProductUnpublishView(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = "catalog.can_unpublish_product"
-    
+
     def has_permission(self) -> bool:
-        product = get_object_or_404(Product, pk=self.kwargs['pk'])
+        product = get_object_or_404(Product, pk=self.kwargs["pk"])
         return super().has_permission() or self.request.user == product.owner
-    
+
     def post(self, request, pk) -> HttpResponse:
         product = get_object_or_404(Product, pk=pk)
         if product.is_published:
@@ -170,7 +171,7 @@ class ProductUnpublishView(LoginRequiredMixin, PermissionRequiredMixin, View):
         else:
             messages.warning(request, "Продукт уже снят с публикации.")
         return redirect("product", pk=pk)
-    
+
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product

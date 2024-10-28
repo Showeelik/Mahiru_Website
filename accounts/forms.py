@@ -4,7 +4,6 @@ import re
 
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.core.validators import FileExtensionValidator
 
 from .models import User
 
@@ -13,7 +12,7 @@ class RegisterForm(UserCreationForm):
     # Загрузка черного списка один раз при инициализации класса
     with open("black_list_words.json", "r", encoding="utf-8") as f:
         BLACKLIST_WORDS = set(json.load(f))  # Преобразуем список в множество для быстрого поиска
-    
+
     phone_number = forms.CharField(max_length=20, required=False, help_text="Необязательное поле")
     country = forms.CharField(max_length=100, required=False, help_text="Необязательное поле")
     username = forms.CharField(max_length=50)
@@ -60,7 +59,7 @@ class RegisterForm(UserCreationForm):
         # Проверка длины пароля
         if len(password) < 8:
             raise forms.ValidationError("Пароль должен содержать не менее 8 символов")
-        
+
         # Проверка на наличие хотя бы одной цифры
         if not re.search(r"\d", password):
             raise forms.ValidationError("Пароль должен содержать хотя бы одну цифру")
