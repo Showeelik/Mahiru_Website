@@ -12,11 +12,11 @@ class Command(BaseCommand):
         # Список групп и их права
         group_list = {
             "Product Moderator": [
-                "can_publish_product",
+                "can_unpublish_product",
                 "can_delete_product",
             ],
             "Content Manager": [
-                "can_publish_blog",
+                "can_unpublish_blog",
                 "delete_blog",
             ],
         }
