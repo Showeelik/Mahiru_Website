@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}MahiruStore - Каталог{% endblock %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Каталоги</h1>
+    <p class="lead">Выберите категорию для просмотра продуктов</p>
+    <p class="lead">Количество категорий: {{ categories.count }}</p>
+    <a href="{% url 'product_add' %}" class="btn btn-primary">Добавить продукт</a>
+
+</div>
+
+<div class="container">
+    <div class="row mt-4">
+        {% for category in categories %}
+
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ category.name }}</h5>
+                    <p class="card-text">{{ category.description }}</p>
+                    <p class="text-muted mb-1">Количество продуктов: {{ category.products.count }}</p>
+                    <a href="{% url 'catalog_products' category.id %}" class="btn btn-primary">Просмотреть продукты</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% include 'includes/footer.html' %}
+{% endblock %}

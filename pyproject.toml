@@ -1,23 +1,29 @@
 
 [tool.poetry]
 name = "mahiru_website"
-version = "0.1.0"
+version = "8.0.0"
 description = ""
-authors = ["name <email>"]
+authors = ["Showeelik <email>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
 requests = "^2.32.3"
+django = "^5.1.2"
+python-dotenv = "^1.0.1"
+pillow = "^11.0.0"
+ipython = "^8.29.0"
+psycopg2-binary = "^2.9.10"
+redis = "^5.2.0"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.2.2"
+pytest = "^8.3.3"
 pytest-cov = "^5.0.0"
 
 [tool.poetry.group.lint.dependencies]
-flake8 = "^7.0.0"
-mypy = "^1.10.0"
-black = "^24.4.2"
+flake8 = "^7.1.1"
+mypy = "^1.13.0"
+black = "^24.10.0"
 isort = "^5.13.2"
 
 [build-system]
@@ -46,8 +52,8 @@ exclude = '''
     | \.venv
     | dist
   )/
-  | foo.py           # Также отдельно исключить файл с именем foo.py
-                     # в корне проекта
+  | foo.py            # Также отдельно исключить файл с именем foo.py
+                      # в корне проекта
 )
 '''
 
