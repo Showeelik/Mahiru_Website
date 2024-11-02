@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Продукты в категории: {{ category.name }}</h1>
+</div>
+
+<div class="container">
+    <div class="row justify-content-start">
+        {% if products %}
+            {% for product in products %}
+                {% include 'includes/product_card.html' with product=product %}
+            {% endfor %}
+        {% else %}
+            <p>В этой категории нет доступных продуктов.</p>
+    </div>
+</div>
+{% endif %}
+
+<a href="{% url 'catalogs' %}">Назад к списку категорий</a>
+{% include 'includes/toast.html'%}
+{% include 'includes/footer.html' %}
+{% endblock %}

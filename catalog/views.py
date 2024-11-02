@@ -1,5 +1,6 @@
 import random
 
+from django.core.cache import cache
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponse
@@ -7,16 +8,27 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
 from .forms import ProductForm
 from .models import Category, Product
+from .services import ProductService
 
 
-# Create your views here.
+@method_decorator(cache_page(60 * 15), name="dispatch")
 class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = "catalog/product_detail.html"
     context_object_name = "product"
+
+    def get_context_data(self, **kwargs) -> dict:
+        context =  super().get_context_data(**kwargs)
+        product_id = self.kwargs["pk"]
+        product = ProductService.get_product_by_id(product_id)
+        context["product"] = product
+        return context
+
 
 
 class HomeView(ListView):
@@ -48,11 +60,13 @@ class HomeView(ListView):
         Returns:
             list[Product]:
         """
-        # Используем seed для случайной сортировки продуктов
-        random_seed = self.request.session["random_seed"]
+        seed = self.request.session["random_seed"]
+        products = cache.get(f"products_{seed}")
 
-        products = list(Product.objects.filter(is_published=True))
-        random.Random(random_seed).shuffle(products)
+        if products is None:
+            products = ProductService.get_published_products()
+            cache.set(f"products_{seed}", products, 60 * 15)
+
         return products
 
 
@@ -92,34 +106,48 @@ class CatalogView(ListView):
     template_name = "catalog/catalogs.html"
     context_object_name = "categories"
 
-    def get_context_data(self, **kwargs) -> dict:
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = self.get_queryset()        
+        return context
+
+    def get_queryset(self) -> list[Category]:
         """
-        Возвращает контекст для шаблона.
-
-
-        Args:
-            **kwargs: _kwargs_
-
+        Возвращает список категорий.
 
         Returns:
-            dict: контекст для шаблона
+            list[Category]:
+        """
+        catalogs = cache.get("catalogs")
+
+        if catalogs is None:
+            catalogs = Category.objects.all()
+            cache.set("catalogs", catalogs, 60 * 15)  # Кэшируем на 15 минут
+
+        return catalogs
+
+
+
+
+class CatalogProductsView(ListView):
+    template_name = "catalog/catalog_products.html"
+    context_object_name = "products"
+
+    def get_queryset(self) -> list[Product]:
+        """
+        Возвращает список продуктов в указанной категории.
+        """
+        category_id = self.kwargs.get("category_id")
+        self.category = get_object_or_404(Category, pk=category_id)
+        return ProductService.get_published_products_by_category(category_id)
+
+    def get_context_data(self, **kwargs):
+        """
+        Добавляет информацию о категории в контекст.
         """
         context = super().get_context_data(**kwargs)
-
-        category_id = self.request.GET.get("category")
-        selected_category = None
-
-        if category_id:
-            selected_category = get_object_or_404(Category, id=category_id)
-            selected_category_products = selected_category.products.filter(is_published=True)
-            context["selected_category_products"] = selected_category_products
-            context["selected_category"] = selected_category
-        else:
-            categories = Category.objects.all()
-            for category in categories:
-                category.published_products = category.products.filter(is_published=True)
-            context["categories"] = categories
-
+        context["category"] = self.category
+        context["products"] = self.get_queryset()
         return context
 
 
